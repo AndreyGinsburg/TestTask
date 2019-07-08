@@ -1,0 +1,49 @@
+﻿@model IEnumerable<WebApplication31.Models.Class>
+@{
+    ViewBag.Title = "Ведомость";
+}
+
+<h2 align="center">Оборотная ведомость</h2>
+<table border="1" align="center">
+    <tr>
+        <th>Б/сч</th>
+        <th>Входящее сальдо, актив</th>
+        <th>Входящее сальдо, пассив</th>
+        <th>Оборот, Дебет</th>
+        <th>Оборот, Кредит</th>
+        <th>Исходящее сальдо, актив</th>
+        <th>Исходящее сальдо, пассив</th>
+        <th></th>
+        @foreach (var _class in Model)
+        {
+            <tr>
+                <td colspan="7"> @_class.title</td>
+            </tr>
+            foreach (var inBal in _class.inBals)
+            {
+            <tr>
+                <td>
+                    @inBal.number
+                </td>
+                <td>
+                    @inBal.act
+                </td>
+                <td>
+                    @inBal.pass
+                </td>
+                <td>
+                    @_class.revs.Where(x => x.number == inBal.number).First().act
+                </td>
+                <td>
+                    @_class.revs.Where(x => x.number == inBal.number).First().pass
+                </td>
+                <td>
+                    @_class.outBals.Where(x => x.number == inBal.number).First().act
+                </td>
+                <td>
+                    @_class.outBals.Where(x => x.number == inBal.number).First().pass
+                </td>
+            </tr>
+            }
+        }
+            </table>
